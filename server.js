@@ -1,13 +1,23 @@
-const express = require('express') // require the express package
-const app = express() // initialize your express app instance
+const express = require('express')
+const app = express()
+const mongoose = require('mongoose');
 const cors = require('cors');
-const axios = require('axios'); // require the package
+const getBooks = require('./controller/book.controller');
+// const axios = require('axios');
+// const seedUserData = require('./models/user.model')
 require('dotenv').config();
-app.use(cors()) // after you initialize your express app instance
-// a server endpoint 
-app.get('/', // our endpoint name
- function (req, res) { // callback function of what we should do with our request
-  res.send('Hello World') // our endpoint function response
-})
- 
-app.listen(7070) // kick start the express server to work
+app.use(cors())
+const port= process.env.PORT;
+mongoose.connect('mongodb://localhost:27017/myFavoritebooks',
+    { useNewUrlParser: true, useUnifiedTopology: true }
+);
+
+// seedUserData();
+app.get('/',
+    function (req, res) {
+        res.send('Hello World')
+    })
+app.get('/books', getBooks)
+app.listen(port, () => {
+    // console.log(`Server started on ${PORT}`);
+});
