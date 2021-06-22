@@ -25,7 +25,7 @@ const createBook = (request, response) => {
     if (error) {
       response.send(error);
     } else {
-      console.log(userData[0].books);
+      // console.log(userData[0].books);
       userData[0].books.push({
         name: bookName,
         description: bookDescription,
@@ -38,8 +38,7 @@ const createBook = (request, response) => {
 };
 
 const deleteBook = (request, response) => {
-  console.log('xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx');
-  console.log(request.params);
+  // console.log(request.params);
   const bookIndex = request.params.book_idx;
   const { email } = request.query;
 
@@ -47,8 +46,8 @@ const deleteBook = (request, response) => {
     if (error) {
       response.send(error);
     } else {
-      console.log('000000000000000000000000');
-      console.log(userData);
+      // console.log('000000000000000000000000');
+      // console.log(userData);
       userData.books.splice(bookIndex, 1);
       userData.save();
       response.send(userData);
