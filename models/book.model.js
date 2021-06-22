@@ -12,7 +12,7 @@ const mongoose = require("mongoose");
 const bookSchema = new mongoose.Schema({
   name: { type: String },
   description: { type: String },
-  url: { type: String },
+  state: { type: String },
 });
 
 module.exports = bookSchema;
