@@ -12,14 +12,17 @@ const {
 } = require("./controller/book.controller");
 require("dotenv").config();
 // const axios = require('axios');
-// const {seedUserData} = require('./models/user.model')
 const PORT = process.env.PORT;
-mongoose.connect("mongodb://localhost:27017/myFavoritebooks", {
+const MONGODB_CLINTE = process.env.MONGODB_CLINTE;
+
+mongoose.connect(MONGODB_CLINTE, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
 });
 
+// const {seedUserData} = require('./models/user.model');
 // seedUserData();
+
 app.get("/", function (req, res) {
   res.send("Hello World");
 });
