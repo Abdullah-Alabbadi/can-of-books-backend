@@ -9,7 +9,6 @@ const getBooks = (request, response) => {
     if (error) {
       response.send(error);
     } else {
-      console.log(user);
       response.json(user);
     }
   });
@@ -18,14 +17,12 @@ const getBooks = (request, response) => {
 const createBook = (request, response) => {
   // we need to get the email of the person and the cat name to add to that person
 
-  // console.log(request.body);
   const { userEmail, bookName, bookDescription, bookState } = request.body;
 
   userModel.find({ email: userEmail }, (error, userData) => {
     if (error) {
       response.send(error);
     } else {
-      // console.log(userData[0].books);
       userData[0].books.push({
         name: bookName,
         description: bookDescription,
@@ -38,7 +35,6 @@ const createBook = (request, response) => {
 };
 
 const deleteBook = (request, response) => {
-  // console.log(request.params);
   const bookIndex = request.params.book_idx;
   const { email } = request.query;
 
@@ -46,8 +42,6 @@ const deleteBook = (request, response) => {
     if (error) {
       response.send(error);
     } else {
-      // console.log('000000000000000000000000');
-      // console.log(userData);
       userData.books.splice(bookIndex, 1);
       userData.save();
       response.send(userData);
@@ -55,8 +49,30 @@ const deleteBook = (request, response) => {
   });
 };
 
+const updateBook = (request, response) => {
+  const bookIndex = request.params.book_idx;
+  // const { userEmail, bookName } = request.body;
+  const { userEmail, bookName, bookDescription, bookState } = request.body;
+  userModel.findOne({ email: userEmail }, (error, userData) => {
+      if (error) {
+          response.send(error)
+      } else {
+          userData.books.splice(bookIndex, 1, {
+            name: bookName,
+            description: bookDescription,
+            state: bookState,
+          });
+          userData.save();
+          response.send(userData)
+      }
+
+  });
+}
+
+
 module.exports = {
   getBooks,
   createBook,
   deleteBook,
+  updateBook
 };
